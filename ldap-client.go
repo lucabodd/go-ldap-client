@@ -191,7 +191,7 @@ func (lc *LDAPClient) GetPolicyAttribute(parameter string, attribute string) (st
 	searchRequest := ldap.NewSearchRequest(
 		lc.PolicyBase,
 		ldap.ScopeWholeSubtree, ldap.NeverDerefAliases, 0, 0, false,
-		fmt.Sprintf(lc.UserFilter, parameter),
+		fmt.Sprintf("(cn=%s)", parameter),
 		[]string{attribute},
 		nil,
 	)
