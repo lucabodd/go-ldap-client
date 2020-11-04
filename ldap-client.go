@@ -14,6 +14,7 @@ type LDAPClient struct {
 	Base               string
 	BindDN             string
 	BindPassword       string
+	PolicyBase		   string
 	GroupFilter        string // e.g. "(memberUid=%s)"
 	Host               string
 	ServerName         string
@@ -169,6 +170,28 @@ func (lc *LDAPClient) GetUserAttribute(username string, attribute string) (strin
 		lc.Base,
 		ldap.ScopeWholeSubtree, ldap.NeverDerefAliases, 0, 0, false,
 		fmt.Sprintf(lc.UserFilter, username),
+		[]string{attribute},
+		nil,
+	)
+	sr, err := lc.Conn.Search(searchRequest)
+	if err != nil {
+		return "", err
+	}
+	res := sr.Entries[0].GetAttributeValue(attribute);
+	return res, nil
+}
+
+// GetUserAttribute returns user specified attribute.
+func (lc *LDAPClient) GetPolicyAttribute(parameter string, attribute string) (string, error) {
+	err := lc.Connect()
+	if err != nil {
+		return "", err
+	}
+
+	searchRequest := ldap.NewSearchRequest(
+		lc.PolicyBase,
+		ldap.ScopeWholeSubtree, ldap.NeverDerefAliases, 0, 0, false,
+		fmt.Sprintf(lc.UserFilter, parameter),
 		[]string{attribute},
 		nil,
 	)
