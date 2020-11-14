@@ -174,7 +174,6 @@ func (lc *LDAPClient) GetUserAttribute(username string, attribute string) (strin
 		nil,
 	)
 	sr, err := lc.Conn.Search(searchRequest)
-	fmt.Println(sr)
 	if err != nil {
 		return "", err
 	}
