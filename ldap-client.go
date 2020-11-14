@@ -131,6 +131,7 @@ func (lc *LDAPClient) Authenticate(username, password string) (bool, map[string]
 		}
 	}
 
+	lc.Close()
 	return true, user, nil
 }
 
@@ -156,6 +157,7 @@ func (lc *LDAPClient) GetUserGroups(username string) ([]string, error) {
 	for _, entry := range sr.Entries {
 		groups = append(groups, entry.GetAttributeValue("cn"))
 	}
+	lc.Close()
 	return groups, nil
 }
 
@@ -174,11 +176,11 @@ func (lc *LDAPClient) GetUserAttribute(username string, attribute string) (strin
 		nil,
 	)
 	sr, err := lc.Conn.Search(searchRequest)
-	lc.Close()
 	if err != nil {
 		return "", err
 	}
 	res := sr.Entries[0].GetAttributeValue(attribute);
+	lc.Close()
 	return res, nil
 }
 
@@ -201,6 +203,7 @@ func (lc *LDAPClient) GetPolicyAttribute(parameter string, attribute string) (st
 		return "", err
 	}
 	res := sr.Entries[0].GetAttributeValue(attribute);
+	lc.Close()
 	return res, nil
 }
 
@@ -252,6 +255,7 @@ func (lc *LDAPClient) SetUserAttribute(username string, attribute string, newVal
 	if err != nil {
 		    return "", err
 	}
+	lc.Close()
 	return newValue, nil
 }
 
@@ -302,5 +306,6 @@ func (lc *LDAPClient) AddUserAttribute(username string, attribute string, value 
 	if err != nil {
 		    return "", err
 	}
+	lc.Close()
 	return value, nil
 }
