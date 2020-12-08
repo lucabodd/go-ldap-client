@@ -181,7 +181,7 @@ func (lc *LDAPClient) GetUserAttribute(username string, attribute string) (strin
 	}
 
 	if(len(sr.Entries)==0){
-		return "", errors.New("(go-ldap-client:GetUserAttribute) ->  attribute for user not found")
+		return "", errors.New("(go-ldap-client:GetUserAttribute) ->  attribute for user not found\n")
 	}
 
 	res := sr.Entries[0].GetAttributeValue(attribute);
@@ -207,6 +207,11 @@ func (lc *LDAPClient) GetPolicyAttribute(parameter string, attribute string) (st
 	if err != nil {
 		return "", err
 	}
+
+	if(len(sr.Entries)==0){
+		return "", errors.New("(go-ldap-client:GetUserAttribute) ->  attribute for user not found")
+	}
+
 	res := sr.Entries[0].GetAttributeValue(attribute);
 	lc.Close()
 	return res, nil
