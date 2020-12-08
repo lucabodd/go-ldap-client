@@ -179,6 +179,7 @@ func (lc *LDAPClient) GetUserAttribute(username string, attribute string) (strin
 	if err != nil {
 		return "", err
 	}
+	fmt.Println(len(sr.Entries))
 	res := sr.Entries[0].GetAttributeValue(attribute);
 	lc.Close()
 	return res, nil
