@@ -1,7 +1,7 @@
 # go-ldap-client
 
 Fork of Simple ldap client to authenticate, performa basic operations on ldap servers.
-Provide utilityes in order to authenticate, get groups, get & set attributes, and add new attributes to the user schema.
+Provide utilities in order to authenticate, get groups, get & set attributes, and add new attributes to the user schema.
 
 # Usage
 The only external dependency is [gopkg.in/ldap.v3](http://gopkg.in/ldap.v3).
